@@ -18,6 +18,6 @@ adversarial-self-critique, self-verifying-loops, multi-agent-finisher,
 agent-bash-security, and skill-authoring -- the guardrails that make an agent's
 output safe to ship.
 
-Get it: [YOUR_PACK_LINK]
+Get it: [https://resilience88.gumroad.com/l/hvdgsc]
 
 *Not affiliated with Anthropic. "Claude" is a trademark of Anthropic.*
