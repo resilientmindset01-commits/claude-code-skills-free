@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Claude Code Power Pack -- ship better code with your agent</title>
+<style>
+  :root{
+    --bg:#0e0f13; --panel:#16181f; --line:#262a35; --ink:#e9ebf0; --dim:#a6adbb;
+    --accent:#d97757; --accent2:#7c86ff; --ok:#4ade80; --radius:14px; --max:1000px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent2);text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  header{padding:64px 0 40px;text-align:center}
+  .kicker{color:var(--accent);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+  h1{font-size:clamp(30px,5vw,50px);line-height:1.1;margin:14px 0 10px;letter-spacing:-.02em}
+  .sub{color:var(--dim);font-size:clamp(17px,2.4vw,20px);max-width:660px;margin:0 auto 26px}
+  .cta{display:inline-block;background:var(--accent);color:#1a1109;font-weight:700;
+    padding:15px 30px;border-radius:12px;font-size:17px;border:0;cursor:pointer}
+  .cta.secondary{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+  .note{color:var(--dim);font-size:13px;margin-top:14px}
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(22px,3.2vw,30px);letter-spacing:-.01em;margin:0 0 8px}
+  .lead{color:var(--dim);max-width:680px;margin:0 0 26px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+  .card h3{margin:0 0 6px;font-size:16px}
+  .card h3 .n{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:8px}
+  .card p{margin:0;color:var(--dim);font-size:14.5px}
+  .pain li{margin:8px 0;color:var(--dim)}
+  .pain b{color:var(--ink)}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:34px;text-align:center;max-width:520px;margin:0 auto}
+  .amt{font-size:46px;font-weight:800;letter-spacing:-.02em}
+  .amt s{color:var(--dim);font-weight:500;font-size:24px;margin-right:10px}
+  .inc{text-align:left;max-width:360px;margin:18px auto 24px}
+  .inc li{margin:7px 0;color:var(--dim)}
+  .inc li::marker{color:var(--ok)}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:2px 18px;margin:10px 0}
+  .faq summary{cursor:pointer;padding:14px 0;font-weight:600;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq p{color:var(--dim);margin:0 0 14px}
+  footer{padding:40px 0 60px;color:var(--dim);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">For people who run Claude Code seriously</div>
+    <h1>Ship better code with your coding agent.</h1>
+    <p class="sub">Eight production-grade Agent Skills that stop the sycophancy, the slop,
+      and the footguns -- so the agent's output is actually safe to ship. Markdown procedures
+      you read in a minute and use for years.</p>
+    <a class="cta" href="YOUR_PAYMENT_LINK">Get the pack</a>
+    <a class="cta secondary" href="#inside">See what's inside</a>
+    <div class="note">Instant download &middot; works with Claude Code and any agent that reads Agent Skills</div>
+  </header>
+
+  <section class="pain">
+    <h2>Your agent is fast. That's the problem.</h2>
+    <p class="lead">A coding agent will happily agree with your bad idea, write code that passes
+      the tests but is not safe to ship, run a destructive shell command on a long unattended run,
+      and loop forever declaring false victory. These eight skills are the guardrails.</p>
+    <ul>
+      <li><b>It agrees with you</b> instead of telling you the plan is wrong.</li>
+      <li><b>It ships plausible-looking code</b> with security and edge-case bugs the tests miss.</li>
+      <li><b>It burns your context window</b> on everything "just in case" and gets dumber.</li>
+      <li><b>It runs unattended</b> with no self-check and no escape hatch.</li>
+    </ul>
+  </section>
+
+  <section id="inside">
+    <h2>What's inside</h2>
+    <p class="lead">Eight skills, each a single SKILL.md your agent loads on demand. No install
+      step, no dependencies, nothing to run -- they encode <em>how</em> to get reliable results.</p>
+    <div class="grid">
+      <div class="card"><h3><span class="n">01</span>adversarial-self-critique</h3><p>Defeat sycophancy -- get a real judgment on an idea, plan, or the agent's own work instead of the model agreeing with you.</p></div>
+      <div class="card"><h3><span class="n">02</span>review-ai-code</h3><p>Review AI-generated code like a senior developer: a 9-step ordered review + pre-merge checklist that catches bugs that pass the tests but are not safe to ship.</p></div>
+      <div class="card"><h3><span class="n">03</span>self-verifying-loops</h3><p>Build an unattended agent loop that prompts itself, checks its own work, and stops or escalates -- with the non-negotiable escape hatch.</p></div>
+      <div class="card"><h3><span class="n">04</span>context-curation</h3><p>Choose the smallest sufficient context per step instead of dumping the whole window, so the agent stays sharp and cheap.</p></div>
+      <div class="card"><h3><span class="n">05</span>claude-md-rules</h3><p>Write a CLAUDE.md the agent actually follows -- a behavioral contract of imperative rules, each closing a specific failure mode.</p></div>
+      <div class="card"><h3><span class="n">06</span>multi-agent-finisher</h3><p>Make a multi-agent system converge on a finished result (Researcher, Builder, Judge, Manager; builder is not the judge; bounded revision).</p></div>
+      <div class="card"><h3><span class="n">07</span>agent-bash-security</h3><p>Lock down the most dangerous tool an agent has -- the shell -- so a long autonomous run cannot do something irreversible.</p></div>
+      <div class="card"><h3><span class="n">08</span>skill-authoring</h3><p>Turn any repeating workflow into a durable Agent Skill in the real Anthropic format, and refine it so it compounds.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Who it's for</h2>
+    <p class="lead">Developers and teams already using Claude Code, Codex, or another coding agent
+      day to day, who are past "it writes boilerplate" and want the agent's work to be reliable
+      enough to trust. If you have never opened a coding agent, start there first -- this pack
+      assumes you already run one.</p>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <p class="lead">1. Buy and download the pack. 2. Drop a skill folder into <code>~/.claude/skills/</code>
+      (all projects) or your repo's <code>.claude/skills/</code> (one project). 3. Invoke it by name
+      or let the agent auto-load it when your request matches. That's it -- they're plain markdown.</p>
+  </section>
+
+  <section>
+    <div class="price">
+      <div class="kicker">One-time purchase</div>
+      <div class="amt"><s>$XX</s>$49</div>
+      <ul class="inc">
+        <li>All 8 skills (SKILL.md files)</li>
+        <li>Install guide + single-seat license</li>
+        <li>Free updates to this pack</li>
+      </ul>
+      <a class="cta" href="YOUR_PAYMENT_LINK">Get the pack</a>
+      <div class="note">Set your price and payment link before publishing. Refund policy is yours to state.</div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>FAQ</h2>
+    <details><summary>Do I need to be a developer?</summary><p>You need to already use a coding agent (Claude Code or similar). The skills assume you run one; they make its output reliable.</p></details>
+    <details><summary>Is this software? Do I install anything?</summary><p>No. Each skill is a single markdown file (a procedure the agent reads). You copy it into a skills folder -- no dependencies, nothing to run.</p></details>
+    <details><summary>Does it only work with Claude?</summary><p>It's written for Claude Code, but the Agent Skill format is plain markdown, so it works with any harness that reads skills. The techniques are largely model-agnostic.</p></details>
+    <details><summary>Can I share it with my team?</summary><p>The license is single-seat -- use it yourself and on your own projects. Reselling or redistributing the files is not permitted. Ask about a team license.</p></details>
+    <details><summary>Will it be updated?</summary><p>Yes -- buyers get free updates to this pack.</p></details>
+  </section>
+
+  <footer>
+    The Claude Code Power Pack. Not affiliated with Anthropic. "Claude" is a trademark of Anthropic.
+  </footer>
+
+</div>
+</body>
+</html>
