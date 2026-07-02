@@ -1,4 +1,4 @@
-# Claude Code skills -- free sample (3 of 8)
+# Claude Code skills -- free sample (4 of 9)
 
 Three Agent Skills I use with Claude Code every day, free. Drop a folder into
 `~/.claude/skills/` (all projects) or `<repo>/.claude/skills/` (one project), then
@@ -14,6 +14,9 @@ Prefer a zip plus a one-page cheatsheet emailed to you? Get the free starter kit
   contract of imperative rules, each closing a specific failure mode.
 - **context-curation** -- choose the smallest sufficient context per step instead of
   dumping the whole window, so the agent stays sharp and cheap.
+- **session-handoff-memory** -- stop the agent starting every session from zero: keep
+  a small curated memory file it reads at the start and updates at the end, so it stops
+  re-asking what you told it and stops repeating a dead end it already ruled out.
 
 ## The full pack (8 skills)
 These three are a sample. The full **Claude Code Power Pack** adds:
