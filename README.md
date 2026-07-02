@@ -4,6 +4,9 @@ Three Agent Skills I use with Claude Code every day, free. Drop a folder into
 `~/.claude/skills/` (all projects) or `<repo>/.claude/skills/` (one project), then
 invoke by name or let the agent auto-load it.
 
+Prefer a zip plus a one-page cheatsheet emailed to you? Get the free starter kit:
+[https://resilience88.gumroad.com/l/ngwuyp]
+
 - **review-ai-code** -- review AI-generated code like a senior developer: a 9-step
   ordered review + pre-merge checklist that catches bugs that pass the tests but are
   not safe to ship.
