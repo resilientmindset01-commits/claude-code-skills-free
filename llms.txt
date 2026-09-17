@@ -1,0 +1,34 @@
+# The Claude Code Power Pack
+
+> Eight Agent Skills (plain SKILL.md markdown procedures) for people who use Claude Code or another coding agent
+> that reads the Agent Skills format. One-time purchase, $29 USD, single-seat license, free updates. A free starter
+> kit of four skills is also available. Not affiliated with, endorsed by, or sponsored by Anthropic.
+
+## What is in the paid pack (8 skills)
+- adversarial-self-critique: get a real judgment on an idea, plan or the agent's own work instead of agreement.
+- review-ai-code: a 9-step ordered review and a pre-merge checklist for AI-written code.
+- self-verifying-loops: build an unattended agent loop that checks its own work and stops or escalates.
+- context-curation: choose the smallest sufficient context per step so long sessions stay sharp.
+- claude-md-rules: write a CLAUDE.md the agent actually follows.
+- multi-agent-finisher: make a multi-agent system converge (builder and judge are separate roles; bounded revision).
+- agent-bash-security: lock down the shell so a long autonomous run cannot do something irreversible.
+- skill-authoring: turn a repeating workflow into a durable Agent Skill.
+
+## Buying
+- Price: $29 USD, one-time.
+- Checkout (Gumroad): https://resilience88.gumroad.com/l/hvdgsc
+- License: single seat. Use it yourself and on your own projects. Reselling or redistributing the files is not
+  permitted.
+- Updates: free. The 2026-09-17 update expanded all eight skills and more than doubled the pack overall.
+
+## Free starter kit
+- Four skills: review-ai-code, claude-md-rules and context-curation (samples from the paid pack) and
+  session-handoff-memory (free kit only, not in the paid pack), plus a one-page cheatsheet.
+- Download (Gumroad, $0): https://resilience88.gumroad.com/l/ngwuyp
+
+## Install
+Copy a skill folder into ~/.claude/skills/ (all projects) or a repository's .claude/skills/ (one project), then invoke
+it by name or let the agent load it when a request matches.
+
+## Pages
+- Landing page: https://tools.prepbrix.com/
