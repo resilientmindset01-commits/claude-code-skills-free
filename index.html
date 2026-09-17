@@ -56,6 +56,15 @@
   .faq summary::-webkit-details-marker{display:none}
   .faq p{color:var(--dim);margin:0 0 14px}
   footer{padding:40px 0 60px;color:var(--dim);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  .choose{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  @media(max-width:720px){.choose{grid-template-columns:1fr}}
+  .choose a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;color:var(--ink);font-weight:600}
+  .choose a:hover,.choose a:focus{border-color:var(--accent)}
+  .choose a span{display:block;color:var(--dim);font-weight:400;font-size:14px;margin-top:4px}
+  .role ol{color:var(--dim);padding-left:22px;margin:14px 0}
+  .role ol li{margin:8px 0}
+  .role ol b{color:var(--ink)}
+  .role .fine{color:var(--dim);font-size:14px;margin:6px 0 18px}
 </style>
 </head>
 <body>
@@ -66,11 +75,79 @@
     <h1>Ship better code with your coding agent.</h1>
     <p class="sub">Eight production-grade Agent Skills that stop the sycophancy, the slop,
       and the footguns -- so the agent's output is actually safe to ship. Markdown procedures
-      you read in a minute and use for years.</p>
+      your agent loads on demand: reference you work through, not one-minute reads.</p>
     <a class="cta" href="https://resilience88.gumroad.com/l/hvdgsc">Get the pack</a>
     <a class="cta secondary" href="#inside">See what's inside</a>
     <div class="note">Instant download &middot; works with Claude Code and any agent that reads Agent Skills</div>
   </header>
+
+  <section id="choose">
+    <h2>What do you mostly use Claude Code for?</h2>
+    <p class="lead">Same eight skills whichever you pick -- this just shows where to start.</p>
+    <nav class="choose" aria-label="Choose how you use Claude Code">
+      <a href="#solo">I build and ship my own projects<span>Solo builder</span></a>
+      <a href="#team">I review or merge code agents wrote<span>Team lead</span></a>
+      <a href="#nocode">I build with it, but I don't read code<span>Non-coder builder</span></a>
+    </nav>
+    <p class="note" style="text-align:left">Or <a href="#inside">see all eight skills</a>.</p>
+  </section>
+
+  <section id="solo" class="role">
+    <div class="kicker">Solo builder</div>
+    <h2>You are the whole team. Your agent should not be the part that breaks things.</h2>
+    <ul class="pain">
+      <li>It tells you the plan is great, because agreeing is what it was trained to do.</li>
+      <li>It declares the feature done, and nothing checked.</li>
+      <li>On a long run it can reach for a shell command you cannot undo.</li>
+    </ul>
+    <p class="lead" style="margin-bottom:0">Start with these, in this order:</p>
+    <ol>
+      <li><b>self-verifying-loops</b> -- decide whether a loop is worth building at all (four conditions), give it a stop signal it cannot fake, and spot a loop that is stuck from outside it.</li>
+      <li><b>agent-bash-security</b> -- five levels of locking down the shell, and the rule for which one a task needs.</li>
+      <li><b>adversarial-self-critique</b> -- get a real judgment on your plan instead of agreement.</li>
+      <li><b>context-curation</b> -- keep a long session sharp instead of letting it fill up and drift.</li>
+    </ol>
+    <p class="fine">Not for you if you have not used a coding agent yet -- start there first.</p>
+    <a class="cta" href="https://resilience88.gumroad.com/l/hvdgsc">Get the pack -- $29</a>
+  </section>
+
+  <section id="team" class="role">
+    <div class="kicker">Team lead reviewing agent-written code</div>
+    <h2>The tests pass. That is no longer the question.</h2>
+    <ul class="pain">
+      <li>Agent-written changes arrive faster than anyone can read them line by line.</li>
+      <li>The explanation in the pull request sounds right whether the code is right or not.</li>
+      <li>The same CLAUDE.md rule gets ignored session after session.</li>
+    </ul>
+    <p class="lead" style="margin-bottom:0">Start with these, in this order:</p>
+    <ol>
+      <li><b>review-ai-code</b> -- a 9-step ordered review and a pre-merge checklist, what to do when a diff outgrows the reviewer, and how to make an automated reviewer rank its findings and give a verdict.</li>
+      <li><b>claude-md-rules</b> -- a 13-rule template to pick from, and the two mechanical reasons a rule looks ignored.</li>
+      <li><b>multi-agent-finisher</b> -- builder and judge as separate roles, seven shapes for multi-agent work, bounded revision.</li>
+      <li><b>agent-bash-security</b> -- separation of duties: the reviewer cannot act, the actor cannot approve.</li>
+    </ol>
+    <p class="fine">Not for you if nobody on your side writes code with an agent yet. The license is single-seat -- ask about a team license.</p>
+    <a class="cta" href="https://resilience88.gumroad.com/l/hvdgsc">Get the pack -- $29</a>
+  </section>
+
+  <section id="nocode" class="role">
+    <div class="kicker">Building with Claude Code without reading code</div>
+    <h2>You can't read the code. You can still make the agent prove it works.</h2>
+    <ul class="pain">
+      <li>"Done" from the agent is a claim, not a check.</li>
+      <li>It agrees with whatever you asked for, including the part that was a bad idea.</li>
+      <li>It can run commands on your machine that you would not know to stop.</li>
+    </ul>
+    <p class="lead" style="margin-bottom:0">Start with these, in this order:</p>
+    <ol>
+      <li><b>self-verifying-loops</b> -- make the agent show that something works, with a stop signal it cannot talk its way past.</li>
+      <li><b>adversarial-self-critique</b> -- ask for the strongest case against your idea before building it.</li>
+      <li><b>agent-bash-security</b> -- safe settings for the shell, laid out as levels from weakest to strongest.</li>
+      <li><b>claude-md-rules</b> -- a short instruction file that stops the same mistake happening every session.</li>
+    </ol>
+    <p class="fine">Honest limit: review-ai-code is written for people who read code, so parts of it will not apply to you. Not for you if you have not run Claude Code on a real project yet.</p>
+    <a class="cta" href="https://resilience88.gumroad.com/l/hvdgsc">Get the pack -- $29</a>
+  </section>
 
   <section id="free">
     <div class="price" style="border-color:var(--accent2)">
@@ -115,8 +192,8 @@
     <h2>Who it's for</h2>
     <p class="lead">Developers and teams already using Claude Code, Codex, or another coding agent
       day to day, who are past "it writes boilerplate" and want the agent's work to be reliable
-      enough to trust. If you have never opened a coding agent, start there first -- this pack
-      assumes you already run one.</p>
+      enough to trust -- and people who build with Claude Code without reading the code it writes.
+      If you have never opened a coding agent, start there first -- this pack assumes you already run one.</p>
   </section>
 
   <section>
@@ -135,6 +212,7 @@
         <li>Install guide + single-seat license</li>
         <li>Free updates to this pack</li>
       </ul>
+      <p class="note" style="margin:-8px 0 18px">Updated 2026-09-17: this edition is more than twice the size of the June one.</p>
       <a class="cta" href="https://resilience88.gumroad.com/l/hvdgsc">Get the pack</a>
       <div class="note">One-time purchase &middot; instant download &middot; single-seat license</div>
     </div>
@@ -142,15 +220,15 @@
 
   <section class="faq">
     <h2>FAQ</h2>
-    <details><summary>Do I need to be a developer?</summary><p>You need to already use a coding agent (Claude Code or similar). The skills assume you run one; they make its output reliable.</p></details>
+    <details><summary>Do I need to be a developer?</summary><p>No, but you need to already use a coding agent (Claude Code or similar). The skills assume you run one; they make its output reliable. One skill, review-ai-code, is written for people who read code.</p></details>
     <details><summary>Is this software? Do I install anything?</summary><p>No. Each skill is a single markdown file (a procedure the agent reads). You copy it into a skills folder -- no dependencies, nothing to run.</p></details>
     <details><summary>Does it only work with Claude?</summary><p>It's written for Claude Code, but the Agent Skill format is plain markdown, so it works with any harness that reads skills. The techniques are largely model-agnostic.</p></details>
     <details><summary>Can I share it with my team?</summary><p>The license is single-seat -- use it yourself and on your own projects. Reselling or redistributing the files is not permitted. Ask about a team license.</p></details>
-    <details><summary>Will it be updated?</summary><p>Yes -- buyers get free updates to this pack.</p></details>
+    <details><summary>Will it be updated?</summary><p>Yes -- buyers get free updates to this pack. The 2026-09-17 update expanded all eight skills and more than doubled the pack overall.</p></details>
   </section>
 
   <footer>
-    The Claude Code Power Pack. Not affiliated with Anthropic. "Claude" is a trademark of Anthropic.
+    The Claude Code Power Pack. Not affiliated with, endorsed by, or sponsored by Anthropic. "Claude" is a trademark of Anthropic, PBC.
   </footer>
 
 </div>
