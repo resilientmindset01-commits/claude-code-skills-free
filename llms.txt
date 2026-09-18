@@ -34,3 +34,6 @@ it by name or let the agent load it when a request matches.
 
 ## Pages
 - Landing page: https://tools.prepbrix.com/
+- Why Claude ignores your CLAUDE.md: https://tools.prepbrix.com/claude-md-ignored -- four reasons a rule in
+  CLAUDE.md does not hold (prohibition with no alternative, scope gap, priority label, file no longer in context),
+  the scope-gap test, a positive drift canary, and a five-minute audit. Drawn from the claude-md-rules skill.

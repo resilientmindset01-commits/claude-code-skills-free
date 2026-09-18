@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Claude ignores your CLAUDE.md -- and how to write one it follows</title>
+<link rel="canonical" href="https://tools.prepbrix.com/claude-md-ignored">
+<meta name="description" content="Claude reads CLAUDE.md at session start and still ignores rules in it. Four reasons this happens, a scope-gap test, and a canary that tells you when the file has stopped reaching the model.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tools.prepbrix.com/claude-md-ignored">
+<meta property="og:image" content="https://tools.prepbrix.com/og.png">
+<meta property="og:title" content="Why Claude ignores your CLAUDE.md">
+<meta property="og:description" content="Four reasons a rule in CLAUDE.md does not hold, the scope-gap test, and a drift canary.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tools.prepbrix.com/og.png">
+<meta name="twitter:title" content="Why Claude ignores your CLAUDE.md">
+<meta name="twitter:description" content="Four reasons a rule in CLAUDE.md does not hold, plus a drift canary.">
+  :root{
+    --bg:#0e0f13; --panel:#16181f; --line:#262a35; --ink:#e9ebf0; --dim:#a6adbb;
+    --accent:#d97757; --accent2:#7c86ff; --ok:#4ade80; --radius:14px; --max:1000px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent2);text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  header{padding:64px 0 40px;text-align:center}
+  .kicker{color:var(--accent);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+  h1{font-size:clamp(30px,5vw,50px);line-height:1.1;margin:14px 0 10px;letter-spacing:-.02em}
+  .sub{color:var(--dim);font-size:clamp(17px,2.4vw,20px);max-width:660px;margin:0 auto 26px}
+  .cta{display:inline-block;background:var(--accent);color:#1a1109;font-weight:700;
+    padding:15px 30px;border-radius:12px;font-size:17px;border:0;cursor:pointer}
+  .cta.secondary{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+  .note{color:var(--dim);font-size:13px;margin-top:14px}
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(22px,3.2vw,30px);letter-spacing:-.01em;margin:0 0 8px}
+  .lead{color:var(--dim);max-width:680px;margin:0 0 26px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+  .card h3{margin:0 0 6px;font-size:16px}
+  .card h3 .n{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:8px}
+  .card p{margin:0;color:var(--dim);font-size:14.5px}
+  .pain li{margin:8px 0;color:var(--dim)}
+  .pain b{color:var(--ink)}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:34px;text-align:center;max-width:520px;margin:0 auto}
+  .amt{font-size:46px;font-weight:800;letter-spacing:-.02em}
+  .amt s{color:var(--dim);font-weight:500;font-size:24px;margin-right:10px}
+  .inc{text-align:left;max-width:360px;margin:18px auto 24px}
+  .inc li{margin:7px 0;color:var(--dim)}
+  .inc li::marker{color:var(--ok)}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:2px 18px;margin:10px 0}
+  .faq summary{cursor:pointer;padding:14px 0;font-weight:600;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq p{color:var(--dim);margin:0 0 14px}
+  footer{padding:40px 0 60px;color:var(--dim);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  .choose{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  @media(max-width:720px){.choose{grid-template-columns:1fr}}
+  .choose a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;color:var(--ink);font-weight:600}
+  .choose a:hover,.choose a:focus{border-color:var(--accent)}
+  .choose a span{display:block;color:var(--dim);font-weight:400;font-size:14px;margin-top:4px}
+  .role ol{color:var(--dim);padding-left:22px;margin:14px 0}
+  .role ol li{margin:8px 0}
+  .role ol b{color:var(--ink)}
+  .role .fine{color:var(--dim);font-size:14px;margin:6px 0 18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header style="padding:52px 0 28px;text-align:left">
+  <div class="kicker">Field note</div>
+  <h1>Why Claude ignores your CLAUDE.md</h1>
+  <p class="sub" style="margin-left:0">It reads the file at session start and still does the thing you told it not to. That is usually not disobedience. It is one of four specific failures, and three of them are fixable by changing how the rule is written.</p>
+</header>
+
+<section>
+  <h2>1. The rule is a prohibition with no alternative</h2>
+  <p>A bare "never X" names X and supplies nothing to do instead. Anthropic's own prompting guidance puts this first: tell the model what to do instead of what not to do, and its worked example replaces "do not use markdown" with "compose your response in flowing prose paragraphs."</p>
+  <p>Rewrite every rule as <b>when X, do Y</b> -- a trigger and a concrete target. "Always do Y" is weaker. A bare "do Y" is weaker still, because nothing tells the model when it applies.</p>
+</section>
+
+<section>
+  <h2>2. The positive rule has a scope gap</h2>
+  <p>This is the one that survives the first rewrite and still fails. Take a real pair: never copy entire files between environments, always use the edit tool for targeted changes. Neither rule covers the shell's own copy command, so both are silent the moment it is reached for, and the model falls back to whatever its training makes obvious.</p>
+  <p><b>The test, one minute per rule:</b> list the two or three ways the thing could actually be done -- the tool, the shell equivalent, a script that wraps it -- and check that every route lands inside your positive rule's scope. Where one falls outside, the rule you wrote is not the rule that is running.</p>
+  <p>The fix is to write the rule against the <em>outcome</em> rather than the tool. "For any file movement, state source and destination and wait for confirmation" covers all three routes. "Use the edit tool" covers one.</p>
+</section>
+
+<section>
+  <h2>3. You are relying on a priority label</h2>
+  <p>ABSOLUTE PRIORITY, CRITICAL and OVERRIDE at the top of the file do not create precedence. They are a few tokens of context on one side of a contest against everything else the model was trained and instructed to do.</p>
+  <p>Write the file as though everything else in the session has standing and your file has none. Every rule then has to earn its outcome by being concrete rather than by being labelled important.</p>
+</section>
+
+<section>
+  <h2>4. The file is no longer reaching the model at all</h2>
+  <p>The failure nobody detects. Long sessions compact, and a constraint stated once is ordinary conversation text to a summariser. A dropped <em>fact</em> announces itself, because the next answer is visibly wrong. A dropped <em>rule</em> does not -- the agent simply stops being constrained and behaves reasonably right up until it does the thing you forbade an hour ago.</p>
+  <p><b>Put a canary in the file.</b> Add one harmless, distinctive, positive instruction -- a fixed marker on the last line of every reply, something that cannot be produced by accident. It has no competing pull from training, so it should hold one hundred percent of the time. The only interesting event is when it stops.</p>
+  <p>When the marker disappears, the model has not disagreed with you. The file has fallen out of context, been truncated, or been summarised away -- and at that moment <em>every other rule in it is suspect too</em>. Start a fresh session or re-assert the file. Do not re-state whichever rule you happened to notice being missed.</p>
+  <p class="note">Watching a prohibition for this purpose tells you nothing, because prohibitions get violated under ordinary operation. Only a positive canary separates "the model disagreed" from "the file is gone."</p>
+</section>
+
+<section>
+  <h2>The five-minute audit</h2>
+  <ol style="color:var(--dim);padding-left:22px">
+    <li style="margin:8px 0">Search the file for <b>don't, never, avoid, no, stop, refrain</b>. Each hit is a prohibition.</li>
+    <li style="margin:8px 0">For each one, is there a paired positive rule? If not, <b>delete the line</b> -- it is decoration.</li>
+    <li style="margin:8px 0">For each pair, run the scope-gap test above and widen the positive until every route lands inside it.</li>
+    <li style="margin:8px 0">Rewrite survivors as "when X, do Y".</li>
+    <li style="margin:8px 0">Cut the old prohibition once the positive covers the case. Keeping both is worse than either.</li>
+    <li style="margin:8px 0">Count the rules before and after. Fewer than half is the normal outcome, not an overcorrection.</li>
+  </ol>
+  <p class="note">One more reason to cut rather than add: the file enters the prompt on <em>every turn</em>, not once per session. An 8,000-token file across a 40-turn session is over 300,000 tokens of overhead before any of your actual work. Anything needed only sometimes belongs in a skill, which loads on demand.</p>
+</section>
+
+<section>
+  <h2>Where this came from</h2>
+  <p>This is one section of <b>claude-md-rules</b>, one of eight Agent Skills in the Claude Code Power Pack. The skills are plain SKILL.md markdown procedures -- no install, no runtime, no dependency. Drop a folder into <code>~/.claude/skills/</code> and invoke it by name.</p>
+  <p style="margin-top:18px">
+    <a class="cta" href="https://resilience88.gumroad.com/l/ngwuyp">Get 4 skills free</a>
+    <a class="cta secondary" href="/">See the full pack -- $29</a>
+  </p>
+  <p class="note">30-day refund. Single-seat license. Free updates. Sold by ResilientMindset via Gumroad. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+</section>
+
+</div>
+</body>
+</html>
