@@ -34,6 +34,14 @@ it by name or let the agent load it when a request matches.
 
 ## Pages
 - Landing page: https://tools.prepbrix.com/
+- Why your agent agrees with everything: https://tools.prepbrix.com/agent-agrees-with-everything -- agreement is a
+  trained preference, not a quirk; why self-critique in the same session fails; withhold your stance, separate maker
+  from judge, put a different model family in the judge's seat; per-step checker versus final verifier. From the
+  adversarial-self-critique skill.
+- Claude Code auto mode, what changed: https://tools.prepbrix.com/auto-mode-what-changed -- auto mode is now the
+  starting permission mode on Pro, Max and Team; broad allow rules are dropped on entry while narrow ones survive; a
+  subagent's own permission setting is ignored; why deny rules are the only floor; and how to prove a control
+  actually blocks. From the agent-bash-security skill.
 - Why Claude ignores your CLAUDE.md: https://tools.prepbrix.com/claude-md-ignored -- four reasons a rule in
   CLAUDE.md does not hold (prohibition with no alternative, scope gap, priority label, file no longer in context),
   the scope-gap test, a positive drift canary, and a five-minute audit. Drawn from the claude-md-rules skill.

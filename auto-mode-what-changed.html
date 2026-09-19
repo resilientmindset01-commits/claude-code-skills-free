@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code auto mode: what it changed, and the rules it drops</title>
+<link rel="canonical" href="https://tools.prepbrix.com/auto-mode-what-changed">
+<meta name="description" content="Auto mode is now the starting permission mode on Pro, Max and Team. What that means for your allow rules, which ones get dropped the moment it starts, and how to check your own controls actually block.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tools.prepbrix.com/auto-mode-what-changed">
+<meta property="og:image" content="https://tools.prepbrix.com/og.png">
+<meta property="og:title" content="Claude Code auto mode: what it changed">
+<meta property="og:description" content="Auto mode is the starting mode now. Which of your allow rules it drops, and how to test a control actually blocks.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tools.prepbrix.com/og.png">
+<meta name="twitter:title" content="Claude Code auto mode: what it changed">
+<meta name="twitter:description" content="Which allow rules auto mode drops, and how to test a control actually blocks.">
+  :root{
+    --bg:#0e0f13; --panel:#16181f; --line:#262a35; --ink:#e9ebf0; --dim:#a6adbb;
+    --accent:#d97757; --accent2:#7c86ff; --ok:#4ade80; --radius:14px; --max:1000px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent2);text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  header{padding:64px 0 40px;text-align:center}
+  .kicker{color:var(--accent);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+  h1{font-size:clamp(30px,5vw,50px);line-height:1.1;margin:14px 0 10px;letter-spacing:-.02em}
+  .sub{color:var(--dim);font-size:clamp(17px,2.4vw,20px);max-width:660px;margin:0 auto 26px}
+  .cta{display:inline-block;background:var(--accent);color:#1a1109;font-weight:700;
+    padding:15px 30px;border-radius:12px;font-size:17px;border:0;cursor:pointer}
+  .cta.secondary{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+  .note{color:var(--dim);font-size:13px;margin-top:14px}
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(22px,3.2vw,30px);letter-spacing:-.01em;margin:0 0 8px}
+  .lead{color:var(--dim);max-width:680px;margin:0 0 26px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+  .card h3{margin:0 0 6px;font-size:16px}
+  .card h3 .n{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:8px}
+  .card p{margin:0;color:var(--dim);font-size:14.5px}
+  .pain li{margin:8px 0;color:var(--dim)}
+  .pain b{color:var(--ink)}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:34px;text-align:center;max-width:520px;margin:0 auto}
+  .amt{font-size:46px;font-weight:800;letter-spacing:-.02em}
+  .amt s{color:var(--dim);font-weight:500;font-size:24px;margin-right:10px}
+  .inc{text-align:left;max-width:360px;margin:18px auto 24px}
+  .inc li{margin:7px 0;color:var(--dim)}
+  .inc li::marker{color:var(--ok)}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:2px 18px;margin:10px 0}
+  .faq summary{cursor:pointer;padding:14px 0;font-weight:600;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq p{color:var(--dim);margin:0 0 14px}
+  footer{padding:40px 0 60px;color:var(--dim);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  .choose{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  @media(max-width:720px){.choose{grid-template-columns:1fr}}
+  .choose a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;color:var(--ink);font-weight:600}
+  .choose a:hover,.choose a:focus{border-color:var(--accent)}
+  .choose a span{display:block;color:var(--dim);font-weight:400;font-size:14px;margin-top:4px}
+  .role ol{color:var(--dim);padding-left:22px;margin:14px 0}
+  .role ol li{margin:8px 0}
+  .role ol b{color:var(--ink)}
+  .role .fine{color:var(--dim);font-size:14px;margin:6px 0 18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header style="padding:52px 0 28px;text-align:left">
+  <div class="kicker">Field note</div>
+  <h1>Auto mode, and the rules it quietly drops</h1>
+  <p class="sub" style="margin-left:0">On Pro, Max and Team plans, auto mode is now the mode a session <em>starts</em> in. If your mental model is still "Claude asks before it does things", it is out of date -- and some of the rules you rely on do not apply in the mode you are now in by default.</p>
+</header>
+
+<section>
+  <h2>What actually changed</h2>
+  <p>Auto mode replaces your approval with a second model, a classifier, that reviews actions before they run. Read-only work and edits inside your working directory are approved without review. Shell commands and network calls go to the classifier. It is a real safety layer -- and it is a different layer from the one most people think they configured.</p>
+</section>
+
+<section>
+  <h2>Broad allow rules are dropped the moment auto mode starts</h2>
+  <p>This is the part that surprises people. On entering auto mode, allow rules that grant arbitrary code execution are removed, and restored when you leave. That includes:</p>
+  <ul style="color:var(--dim)">
+    <li>blanket shell allows</li>
+    <li>wildcarded interpreters -- an allow rule for <code>python*</code> style patterns</li>
+    <li>package-manager run commands</li>
+    <li>agent-spawning allow rules</li>
+    <li>rules covering tools that execute through the shell</li>
+  </ul>
+  <p>Narrow rules survive. An allow rule naming one exact command still applies. So the practical consequence is the opposite of what people assume: <b>a carefully narrow allow list keeps working, and a convenient broad one silently stops.</b> If your unattended runs depend on a broad rule, they are now going through the classifier instead.</p>
+</section>
+
+<section>
+  <h2>Two more things worth knowing</h2>
+  <p><b>A subagent's own permission setting is ignored.</b> In auto mode, any permission mode declared in a subagent's own definition does not apply -- it runs under the parent's rules, and its final report is reviewed before the parent reads it. A security warning on a subagent's report is a verdict, not noise.</p>
+  <p><b>The classifier costs tokens and runs on its own model.</b> It does not use your model selection, and on API and Enterprise accounts its calls count toward usage. Reads and working-directory edits skip it, so the cost sits on shell commands and network operations.</p>
+</section>
+
+<section>
+  <h2>The layer that does not depend on a model's judgement</h2>
+  <p>Allow rules only ever <em>grant</em>. The classifier is a model. Underneath both, deny rules block before either is consulted -- and that is the only floor in the system that does not involve anything forming an opinion.</p>
+  <p>The cleanest argument for using them is not about the agent at all: <b>an ask rule leaves the decision to your future tired self at the worst possible moment. A deny rule takes the option away in advance.</b> Anything you would not want to be asked about at the end of a long session belongs in deny, not ask.</p>
+  <p class="note">One trap: deny rules match the command as written. A rule anchored to the start of a command misses the same command with an option in front of it. Walk the two or three ways the thing could actually be done -- the tool, the shell equivalent, the script that wraps it -- and check each one is covered.</p>
+</section>
+
+<section>
+  <h2>Test your control, once, on the version you are running</h2>
+  <p>A permission control here has repeatedly failed <em>open</em> while continuing to look like it worked -- the error text appeared, the user saw a block, the action ran anyway. Each case was reported and fixed within days, which is the reassuring half. The unreassuring half is that they shipped in releases and were found by users, not by the people relying on them.</p>
+  <p><b>So prove it once.</b> In a scratch repository, ask for the exact thing your rule should stop, then check the <em>world</em> rather than the message -- did the file change, did the branch move, did the request leave. A control you have never seen refuse something is a control you are assuming. Re-run that probe after every upgrade.</p>
+</section>
+
+<section>
+  <h2>Where this came from</h2>
+  <p>This is part of <b>agent-bash-security</b>, one of eight Agent Skills in the Claude Code Power Pack -- plain SKILL.md procedures your agent loads on demand. No install, no runtime.</p>
+  <p style="margin-top:18px">
+    <a class="cta" href="https://resilience88.gumroad.com/l/ngwuyp">Get 4 skills free</a>
+    <a class="cta secondary" href="/">See the full pack -- $29</a>
+  </p>
+  <p class="note">30-day refund. Single-seat license. Free updates. Sold by ResilientMindset via Gumroad. Not affiliated with, endorsed by, or sponsored by Anthropic. Behaviour described here was read at Anthropic's own documentation on 2026-09-18; check the current docs before relying on any detail.</p>
+</section>
+
+</div>
+</body>
+</html>

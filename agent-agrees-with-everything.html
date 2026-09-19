@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why your coding agent agrees with everything you say</title>
+<link rel="canonical" href="https://tools.prepbrix.com/agent-agrees-with-everything">
+<meta name="description" content="Agreement is trained in, not a quirk. Why a model tells you your plan is great, why asking it to critique itself does not fix it, and the three moves that get a real judgment.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tools.prepbrix.com/agent-agrees-with-everything">
+<meta property="og:image" content="https://tools.prepbrix.com/og.png">
+<meta property="og:title" content="Why your coding agent agrees with everything you say">
+<meta property="og:description" content="Agreement is trained in. Three moves that get a real judgment instead.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tools.prepbrix.com/og.png">
+<meta name="twitter:title" content="Why your coding agent agrees with everything you say">
+<meta name="twitter:description" content="Agreement is trained in. Three moves that get a real judgment instead.">
+  :root{
+    --bg:#0e0f13; --panel:#16181f; --line:#262a35; --ink:#e9ebf0; --dim:#a6adbb;
+    --accent:#d97757; --accent2:#7c86ff; --ok:#4ade80; --radius:14px; --max:1000px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent2);text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  header{padding:64px 0 40px;text-align:center}
+  .kicker{color:var(--accent);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+  h1{font-size:clamp(30px,5vw,50px);line-height:1.1;margin:14px 0 10px;letter-spacing:-.02em}
+  .sub{color:var(--dim);font-size:clamp(17px,2.4vw,20px);max-width:660px;margin:0 auto 26px}
+  .cta{display:inline-block;background:var(--accent);color:#1a1109;font-weight:700;
+    padding:15px 30px;border-radius:12px;font-size:17px;border:0;cursor:pointer}
+  .cta.secondary{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+  .note{color:var(--dim);font-size:13px;margin-top:14px}
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(22px,3.2vw,30px);letter-spacing:-.01em;margin:0 0 8px}
+  .lead{color:var(--dim);max-width:680px;margin:0 0 26px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+  .card h3{margin:0 0 6px;font-size:16px}
+  .card h3 .n{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:8px}
+  .card p{margin:0;color:var(--dim);font-size:14.5px}
+  .pain li{margin:8px 0;color:var(--dim)}
+  .pain b{color:var(--ink)}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:34px;text-align:center;max-width:520px;margin:0 auto}
+  .amt{font-size:46px;font-weight:800;letter-spacing:-.02em}
+  .amt s{color:var(--dim);font-weight:500;font-size:24px;margin-right:10px}
+  .inc{text-align:left;max-width:360px;margin:18px auto 24px}
+  .inc li{margin:7px 0;color:var(--dim)}
+  .inc li::marker{color:var(--ok)}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:2px 18px;margin:10px 0}
+  .faq summary{cursor:pointer;padding:14px 0;font-weight:600;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq p{color:var(--dim);margin:0 0 14px}
+  footer{padding:40px 0 60px;color:var(--dim);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  .choose{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  @media(max-width:720px){.choose{grid-template-columns:1fr}}
+  .choose a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;color:var(--ink);font-weight:600}
+  .choose a:hover,.choose a:focus{border-color:var(--accent)}
+  .choose a span{display:block;color:var(--dim);font-weight:400;font-size:14px;margin-top:4px}
+  .role ol{color:var(--dim);padding-left:22px;margin:14px 0}
+  .role ol li{margin:8px 0}
+  .role ol b{color:var(--ink)}
+  .role .fine{color:var(--dim);font-size:14px;margin:6px 0 18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header style="padding:52px 0 28px;text-align:left">
+  <div class="kicker">Field note</div>
+  <h1>Why your agent agrees with everything</h1>
+  <p class="sub" style="margin-left:0">You describe a plan. It says the plan is strong. You describe the opposite plan. It says that one is strong too. This is not a quirk you can prompt your way out of -- it is what the model was trained to do, and the usual fix makes it worse.</p>
+</header>
+
+<section>
+  <h2>Where the agreement comes from</h2>
+  <p>Models are tuned on human preference. Between two answers, people reliably pick the one that is warmer, more confident and more affirming -- so the tuning selects for it. Agreement is not the model failing to notice your plan's flaws. It is the model doing the thing it was rewarded for.</p>
+  <p>Which is why "be honest with me" barely moves it. You are asking a system to override a trained preference with a sentence, and the sentence is in the context while the preference is in the weights.</p>
+</section>
+
+<section>
+  <h2>The move that does not work</h2>
+  <p>Asking the same session to critique its own plan. It will produce a critique -- fluent, structured, and shaped by the fact that it already committed to the plan two messages ago. A reviewer living inside the maker's context agrees with itself, because the thing being reviewed and the thing doing the reviewing share every assumption that produced the plan.</p>
+  <p>The same applies to "are you sure?" A model asked whether it is sure will usually say yes, then say no if you ask twice. Neither answer is evidence.</p>
+</section>
+
+<section>
+  <h2>Three moves that do work</h2>
+  <p><b>1. Withhold your stance.</b> Do not say which option you prefer, or that the code is yours. Present the work neutrally, or present both options as though someone else wrote them. Most of the agreement you get is the model agreeing with the preference it detected, not with the argument.</p>
+  <p><b>2. Separate the maker from the judge.</b> Put the review in a different session with a different brief -- read the goal, read the work, return a verdict, propose no fixes, run no code. The point is that the judge has no stake in the thing it is reading and no memory of choosing it.</p>
+  <p><b>3. Put a different model family in the judge's seat.</b> Separating maker and judge removes the incentive to agree. It does not remove <em>correlated error</em>: a judge on the same base model shares the maker's training, its blind spots and its failure modes, so the class of mistake it is least able to see is exactly the class the maker is most likely to make. Two seats on one model is one opinion rendered twice.</p>
+</section>
+
+<section>
+  <h2>Split the checker in two when it matters</h2>
+  <p>One judge catches one kind of error. Two catch different ones, and they fail differently:</p>
+  <p><b>A per-step checker</b> verifies each step as the work proceeds -- was this step supported by what it cites, does it hold when rerun on its own. It catches a wrong step early and cheaply. It will happily wave through a chain of individually valid steps that answers the wrong question.</p>
+  <p><b>A final verifier</b> validates the finished result without inheriting the chain that produced it. It catches the wrong-question failure, and cannot tell you where things went astray.</p>
+  <p>Where the cost of a wrong answer is high, run both -- and keep the final verifier ignorant of the reasoning, or it becomes a reviewer of the argument rather than of the result.</p>
+</section>
+
+<section>
+  <h2>The check that has no family</h2>
+  <p>Every move above is still a judgement. Where you can replace a judgement with a fact, do: a test that runs, a post-condition that holds or does not, a figure recomputed from the source. A deterministic check has no training, no preference and no blind spot -- and it is the only reviewer that cannot be talked round.</p>
+  <p class="note">The general rule underneath all of this: never take a control signal from the component under test. A self-reported confidence score and a model's own "I'm sure" are produced by the thing whose judgment is in question, and both read highest on the runs that have gone furthest in the wrong direction.</p>
+</section>
+
+<section>
+  <h2>Where this came from</h2>
+  <p>This is part of <b>adversarial-self-critique</b>, one of eight Agent Skills in the Claude Code Power Pack. The skills are plain SKILL.md markdown procedures -- no install, no runtime, no dependency. Drop a folder into <code>~/.claude/skills/</code> and invoke it by name.</p>
+  <p style="margin-top:18px">
+    <a class="cta" href="https://resilience88.gumroad.com/l/ngwuyp">Get 4 skills free</a>
+    <a class="cta secondary" href="/">See the full pack -- $29</a>
+  </p>
+  <p class="note">30-day refund. Single-seat license. Free updates. Sold by ResilientMindset via Gumroad. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+</section>
+
+</div>
+</body>
+</html>
