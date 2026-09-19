@@ -510,6 +510,24 @@ symlink patterns are documented by Anthropic. VERIFY the current import depth an
 filename support against live docs before relying on specifics -- vendor conventions
 are exactly the thing this section assumes will move.
 
+## Two numbers from the source, and the path-scoping trap
+Verified at code.claude.com 2026-09-19, on the memory and context-window pages.
+THE SIZE TARGET IS UNDER 200 LINES per CLAUDE.md file, stated on two separate Anthropic pages, with the reason given
+plainly: "Longer files consume more context and reduce adherence." Imports do not help -- imported files load at
+launch like everything else. If you have seen a token figure quoted instead, the documented target is lines.
+THE TRAP IS PATH-SCOPING, and it is worth more than the size number. Path-scoped rules and nested CLAUDE.md files are
+the recommended way to keep the base file small, and they are ALSO the part that does not survive compaction. They
+load into message history when a matching file is read, so a summary replaces them. The project-root CLAUDE.md is
+re-read from disk and comes back intact; a `paths:`-scoped rule does not, until some later file read happens to
+match again.
+SO THE DECISION IS: for a rule that merely helps while working in one area, scope it and accept that it lapses. For
+a rule that must hold at turn 200 -- a safety rule, a destructive-operation rule, the one that stops the expensive
+mistake -- drop the frontmatter and put it in the project-root file, and pay the context for it. Anthropic states
+this remedy directly. The instinct to tidy a long root file by scoping its rules is the instinct that removes them
+from the session where they matter.
+AUTO MEMORY HAS ITS OWN CEILING: the first 200 lines or 25KB of the index, whichever comes first, and the rest is
+dropped at load. An index that grew past it has lost its tail without saying so.
+
 ## You have understood when
 - You can say why CLAUDE.md is advisory and why length is the enemy of compliance.
 - For any rule in your file, you can name the exact mistake it prevents -- and you

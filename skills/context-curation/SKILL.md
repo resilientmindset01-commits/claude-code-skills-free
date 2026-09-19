@@ -268,6 +268,37 @@ only mattered three steps later. This is the same reason compaction protects
 decisions over reasoning, applied to the store instead of the window; see
 compounding-memory for the write/consolidate discipline.
 
+## What actually survives compaction, from the source rather than from feel
+Read at code.claude.com/docs/en/context-window, 2026-09-19. Curation decisions change once you know which of your
+context is re-read from disk and which is a summary of a summary.
+RE-INJECTED FROM DISK, so it comes back intact: the project-root CLAUDE.md and unscoped rules, auto memory, and the
+plan written in plan mode. The system prompt and output style simply keep applying.
+RELOADED ONLY WHEN THEIR TRIGGER FIRES AGAIN: rules with `paths:` frontmatter, and nested CLAUDE.md files in
+subdirectories. They entered through message history when a matching file was read, so compaction summarises them
+away with everything else. Anthropic's remedy is explicit: "If a rule must persist across compaction, drop the
+paths: frontmatter or move it to the project-root CLAUDE.md." THIS IS THE TRAP. Path-scoping is the recommended way
+to keep context small, and it is also the thing that quietly stops applying in exactly the long session where you
+most need the rule.
+RE-READ, BUT ONLY FIVE: the files read or edited in the session, most recently modified first. A file over 5,000
+tokens comes back as a path reference with no content.
+CAPPED: invoked skill bodies, 5,000 tokens each and 25,000 total, oldest dropped first.
+SUMMARISED AWAY: context that hooks added earlier. A SessionStart hook matching the `compact` source is how you put
+it back, and that is the supported mechanism for anything that must survive.
+
+## The startup budget, with the actual numbers
+Same source. Before you type anything, a session with one project carries roughly 7,850 tokens: system prompt 4,200,
+project CLAUDE.md 1,800, auto memory 680, skill descriptions 450, user-level CLAUDE.md 320, environment 280, MCP tool
+names 120. The example user prompt against it is 45 tokens.
+THE PROPORTION IS THE POINT, and it settles the argument about where curation pays. Your words are under one percent
+of what the model reads; the project's own instruction files are the largest movable block. Auto memory is read to
+the FIRST 200 LINES OR 25KB, whichever comes first, and everything past that is silently dropped on the next load --
+so an index file that has grown past the limit is not partly loaded, it is truncated, and the entries at the bottom
+have stopped existing.
+MCP IS NO LONGER THE DEFAULT PROBLEM. Tool schemas are deferred: only names load, at about 120 tokens.
+`ENABLE_TOOL_SEARCH=auto` loads schemas upfront when they fit within 10 percent of the context window, and `=false`
+loads everything. Advice written before deferral -- the kind that quotes tens of thousands of tokens for a handful
+of servers -- is describing a product that no longer behaves that way.
+
 ## You have understood when
 - You can explain why a bigger context window does not fix a drifting agent, in
   terms of effective context and compounding per-step error.
