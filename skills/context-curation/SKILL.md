@@ -299,6 +299,27 @@ MCP IS NO LONGER THE DEFAULT PROBLEM. Tool schemas are deferred: only names load
 loads everything. Advice written before deferral -- the kind that quotes tens of thousands of tokens for a handful
 of servers -- is describing a product that no longer behaves that way.
 
+## Put the budget in the system, not in your good intentions
+Curation that depends on remembering to curate stops working on the day you are busy, which is the day it matters.
+The fix is that every limit below is enforced by code, before the model is called, and none of them is a habit.
+- CAP WHAT RETRIEVAL RETURNS. A search that can return forty documents will eventually return forty documents.
+  Cap the count and the total size at the retrieval layer.
+- CAP WHAT A TOOL RETURNS. Command output, file contents and API responses are unbounded by default. A ten-thousand
+  line log is a context event, not a tool result. Truncate at the boundary and say that you truncated.
+- CAP THE REQUEST. Know the ceiling for one call and refuse to exceed it rather than discovering it.
+- CAP THE OUTPUT. An unbounded generation is an unbounded cost and usually a worse answer.
+- ATTACH ONLY THE TOOLS THE TASK NEEDS. Tool definitions are paid context before any work happens, and a tool the
+  model cannot use is a tool it can still be confused by. Narrow the set per task rather than per project.
+- GATE BEFORE THE CALL. The cheapest model call is the one that does not happen. A rule, a cache hit or a lookup
+  answers a surprising share of requests, and deciding that in code costs nothing.
+THE REVERSAL THAT MAKES THIS PERMANENT: a bigger context window does not retire any of it. A larger window DELAYS
+the problem, it does not solve it -- the same junk arrives, just later, and by then the session is long enough that
+the cost of the mistake is higher. Every generation of models has made people believe curation is about to stop
+mattering, and it has not stopped mattering yet.
+ONE THING TO KEEP OUTSIDE THE WINDOW ENTIRELY: compaction preserves the shape of a conversation and loses exact
+detail. So key decisions, current state and accepted results belong in a durable record you write on purpose --
+a file, a log, a board -- not in the conversation you hope survives.
+
 ## You have understood when
 - You can explain why a bigger context window does not fix a drifting agent, in
   terms of effective context and compounding per-step error.

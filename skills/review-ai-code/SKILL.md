@@ -346,3 +346,22 @@ modify a test to make a change pass. And at review, read test edits as a separat
 each one what behaviour it used to assert. Two habits from the same account go with it: keep the working context well
 below the advertised window, and commit each phase of a plan separately so review runs per commit rather than on an
 accumulated diff. (@hooeem, 2026-09-18 intake; UNVERIFIED practitioner framing, no figure of his is carried.)
+
+## The bottleneck moved, and that is the whole case for reviewing at all
+Worth stating plainly because it is the reason this skill exists rather than a nice-to-have.
+GENERATION IS NO LONGER THE CONSTRAINT. A team can now produce more code in a week than it can absorb in a month.
+The constraint moved to REVIEW, and review did not get faster, because a person still has to hold the change in
+their head to judge it.
+WHAT HAPPENS WHEN YOU IGNORE THAT: the team keeps shipping and quietly stops understanding its own system. Nothing
+breaks on the day it is merged. It breaks later, and the cost is not the bug -- it is trying to learn your own
+codebase after the fact, under time pressure, at the moment something is already wrong. That debt is called
+comprehension debt and it is invisible on every dashboard, because everything is green and velocity is up.
+THE TEST, and it is uncomfortable: pick a file your team merged last month and ask who can explain why it works.
+If nobody can, the code exists but the understanding does not, and the understanding is the thing that lets you
+change it safely.
+THE CONSEQUENCE FOR HOW YOU REVIEW: you are not checking the diff for defects. You are deciding whether the system
+is still one a person can reason about. That is why the steps in this skill ask what a change makes harder, and
+what it commits you to, and not only whether it works.
+AND IT IS WHY VOLUME IS THE ENEMY. If review is the bottleneck, generating more is not progress. A smaller change
+that is fully understood beats a larger one that is merely passing, and the right response to "we can generate
+this in an afternoon" is usually to generate less of it.
