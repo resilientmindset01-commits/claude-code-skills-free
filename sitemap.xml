@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://tools.prepbrix.com/</loc><lastmod>2026-09-19</lastmod></url>
-  <url><loc>https://tools.prepbrix.com/claude-md-ignored</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://tools.prepbrix.com/agent-agrees-with-everything</loc><lastmod>2026-09-19</lastmod></url>
-  <url><loc>https://tools.prepbrix.com/auto-mode-what-changed</loc><lastmod>2026-09-19</lastmod></url>
+  <url><loc>https://tools.prepbrix.com/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://tools.prepbrix.com/claude-md-ignored</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://tools.prepbrix.com/agent-agrees-with-everything</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://tools.prepbrix.com/auto-mode-what-changed</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://tools.prepbrix.com/skill-stops-working-long-session</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://tools.prepbrix.com/claude-md-rule-stopped-applying</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://tools.prepbrix.com/scheduled-task-ran-but-did-nothing</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://tools.prepbrix.com/cron-fired-on-the-wrong-day</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://tools.prepbrix.com/agent-stalled-lost-the-work</loc><lastmod>2026-09-20</lastmod></url>
 </urlset>

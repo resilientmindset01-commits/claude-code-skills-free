@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your skill stops working in long sessions -- here is the documented reason</title>
+<link rel="canonical" href="https://tools.prepbrix.com/skill-stops-working-long-session">
+<meta name="description" content="After a conversation compacts, Claude Code re-injects invoked skills capped at 5,000 tokens each and 25,000 total, and truncation keeps the start of the file. A skill whose key rule sits at the bottom loses it exactly when the session is hardest.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tools.prepbrix.com/skill-stops-working-long-session">
+<meta property="og:image" content="https://tools.prepbrix.com/og.png">
+<meta property="og:title" content="Why your skill stops working in long sessions">
+<meta property="og:description" content="Skill bodies are truncated after compaction, from the start. The fix is where you put the rule.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tools.prepbrix.com/og.png">
+<meta name="twitter:title" content="Why your skill stops working in long sessions">
+<meta name="twitter:description" content="Skill bodies are truncated after compaction, from the start. The fix is where you put the rule.">
+<style>
+  :root{
+    --bg:#0e0f13; --panel:#16181f; --line:#262a35; --ink:#e9ebf0; --dim:#a6adbb;
+    --accent:#d97757; --accent2:#7c86ff; --ok:#4ade80; --radius:14px; --max:1000px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent2);text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  header{padding:64px 0 40px;text-align:center}
+  .kicker{color:var(--accent);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+  h1{font-size:clamp(30px,5vw,50px);line-height:1.1;margin:14px 0 10px;letter-spacing:-.02em}
+  .sub{color:var(--dim);font-size:clamp(17px,2.4vw,20px);max-width:660px;margin:0 auto 26px}
+  .cta{display:inline-block;background:var(--accent);color:#1a1109;font-weight:700;
+    padding:15px 30px;border-radius:12px;font-size:17px;border:0;cursor:pointer}
+  .cta.secondary{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+  .note{color:var(--dim);font-size:13px;margin-top:14px}
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(22px,3.2vw,30px);letter-spacing:-.01em;margin:0 0 8px}
+  .lead{color:var(--dim);max-width:680px;margin:0 0 26px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+  .card h3{margin:0 0 6px;font-size:16px}
+  .card h3 .n{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:8px}
+  .card p{margin:0;color:var(--dim);font-size:14.5px}
+  .pain li{margin:8px 0;color:var(--dim)}
+  .pain b{color:var(--ink)}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:34px;text-align:center;max-width:520px;margin:0 auto}
+  .amt{font-size:46px;font-weight:800;letter-spacing:-.02em}
+  .amt s{color:var(--dim);font-weight:500;font-size:24px;margin-right:10px}
+  .inc{text-align:left;max-width:360px;margin:18px auto 24px}
+  .inc li{margin:7px 0;color:var(--dim)}
+  .inc li::marker{color:var(--ok)}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:2px 18px;margin:10px 0}
+  .faq summary{cursor:pointer;padding:14px 0;font-weight:600;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq p{color:var(--dim);margin:0 0 14px}
+  footer{padding:40px 0 60px;color:var(--dim);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  .choose{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  @media(max-width:720px){.choose{grid-template-columns:1fr}}
+  .choose a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;color:var(--ink);font-weight:600}
+  .choose a:hover,.choose a:focus{border-color:var(--accent)}
+  .choose a span{display:block;color:var(--dim);font-weight:400;font-size:14px;margin-top:4px}
+  .role ol{color:var(--dim);padding-left:22px;margin:14px 0}
+  .role ol li{margin:8px 0}
+  .role ol b{color:var(--ink)}
+  .role .fine{color:var(--dim);font-size:14px;margin:6px 0 18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header style="padding:52px 0 28px;text-align:left">
+  <div class="kicker">Field note</div>
+  <h1>Your skill stops working in long sessions</h1>
+  <p class="sub" style="margin-left:0">It fires correctly for an hour, then quietly stops following its own instructions. Nothing changed in the file. What changed is how much of the file is still in the conversation.</p>
+</header>
+
+<section>
+  <h2>What actually happens at compaction</h2>
+  <p>When a session grows long enough, Claude Code summarises the conversation to make room. Most of what loaded at startup comes back: the project-root CLAUDE.md and unscoped rules are re-read from disk, auto memory is re-read, the system prompt still applies.</p>
+  <p>Invoked skills come back too, but not intact. Anthropic's documentation states the limits plainly: skill bodies are re-injected <b>capped at 5,000 tokens per skill and 25,000 tokens total, with the oldest invoked skills dropped first</b>.</p>
+  <p class="note">Source: code.claude.com/docs/en/context-window, section "What survives compaction". Checked 2026-09-20.</p>
+</section>
+
+<section>
+  <h2>The part that decides how you write the file</h2>
+  <p>Truncation is not random and it is not from the middle. The documentation says it directly: <b>"Truncation keeps the start of the file, so put the most important instructions near the top of SKILL.md."</b></p>
+  <p>So a long skill does not degrade evenly. It loses its tail. And the tail is where most people put the things they wrote last: the exit criteria, the anti-patterns, the one rule that prevents the expensive mistake. Those are the first to go, in the session where they matter most.</p>
+  <p>Read that sentence again with a stopwatch on it. Your skill has its most important instruction for the easy first half of a long session, and does not have it for the hard second half.</p>
+</section>
+
+<section>
+  <h2>The skill listing does not come back at all</h2>
+  <p>A second limit sits next to the first. The startup listing of available skills -- the one-line descriptions that let the model know what it can reach for -- is <b>not</b> re-injected after compaction. Only skills that were actually invoked are preserved.</p>
+  <p>The practical effect: a skill the model has not yet used stops being visible to it in a long session. If a skill is going to matter, invoking it early is worth more than hoping its description fires late.</p>
+</section>
+
+<section>
+  <h2>What to do about it, in order</h2>
+  <ol><li><b>Move the load-bearing rule to the top.</b> Lead with the rule, then the procedure, then the background. If the file reads better the other way round, write it the other way round and then move the rule anyway.</li><li><b>Measure the file.</b> 5,000 tokens is roughly 3,500-4,000 words. If your SKILL.md is past that, some of it is decorative in every long session whether you like it or not.</li><li><b>Split rather than reorder twice.</b> A skill that needs its tail is two skills. One skill, one job, is a context rule before it is a style preference.</li><li><b>Count your invoked skills.</b> The 25,000-token total is shared. Five invoked skills at 5,000 each fill it exactly, and the sixth pushes the first one out.</li><li><b>For anything with side effects, set <code>disable-model-invocation: true</code>.</b> That keeps the skill out of context entirely -- it is not even in the startup listing -- until a person invokes it by name. It costs zero until the moment you want it.</li></ol>
+</section>
+
+<section>
+  <h2>What this is not</h2>
+  <p>This is not the model ignoring instructions, and no amount of stronger wording fixes it. The sentence is gone from the context window. Rewriting it in capitals at the bottom of the file produces a more emphatic sentence in the same place, which is to say nowhere.</p>
+</section>
+
+<section>
+  <h2>Where this came from</h2>
+  <p>This is one section of <b>skill-authoring</b>, one of eight Agent Skills in the Claude Code Power Pack. The skills are plain SKILL.md markdown procedures -- no install, no runtime, no dependency. Drop a folder into <code>~/.claude/skills/</code> and invoke it by name.</p>
+  <p style="margin-top:18px">
+    <a class="cta" href="https://resilience88.gumroad.com/l/ngwuyp">Get 4 skills free</a>
+    <a class="cta secondary" href="/">See the full pack -- $29</a>
+  </p>
+  <p class="note">30-day refund. Single-seat license. Free updates. Sold by ResilientMindset via Gumroad. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+</section>
+
+</div>
+</body>
+</html>

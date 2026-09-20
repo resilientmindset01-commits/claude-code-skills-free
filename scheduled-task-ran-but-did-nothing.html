@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your scheduled task says it succeeded and did nothing</title>
+<link rel="canonical" href="https://tools.prepbrix.com/scheduled-task-ran-but-did-nothing">
+<meta name="description" content="A run that produces no output is not missing, not stuck and not failed, so an absence monitor passes it. Two real causes, and the fourth check that catches both.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tools.prepbrix.com/scheduled-task-ran-but-did-nothing">
+<meta property="og:image" content="https://tools.prepbrix.com/og.png">
+<meta property="og:title" content="The scheduled task that succeeded and did nothing">
+<meta property="og:description" content="A run can do no work and still report success. Here is how to catch it.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tools.prepbrix.com/og.png">
+<meta name="twitter:title" content="The scheduled task that succeeded and did nothing">
+<meta name="twitter:description" content="A run can do no work and still report success. Here is how to catch it.">
+<style>
+  :root{
+    --bg:#0e0f13; --panel:#16181f; --line:#262a35; --ink:#e9ebf0; --dim:#a6adbb;
+    --accent:#d97757; --accent2:#7c86ff; --ok:#4ade80; --radius:14px; --max:1000px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent2);text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  header{padding:64px 0 40px;text-align:center}
+  .kicker{color:var(--accent);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+  h1{font-size:clamp(30px,5vw,50px);line-height:1.1;margin:14px 0 10px;letter-spacing:-.02em}
+  .sub{color:var(--dim);font-size:clamp(17px,2.4vw,20px);max-width:660px;margin:0 auto 26px}
+  .cta{display:inline-block;background:var(--accent);color:#1a1109;font-weight:700;
+    padding:15px 30px;border-radius:12px;font-size:17px;border:0;cursor:pointer}
+  .cta.secondary{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+  .note{color:var(--dim);font-size:13px;margin-top:14px}
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(22px,3.2vw,30px);letter-spacing:-.01em;margin:0 0 8px}
+  .lead{color:var(--dim);max-width:680px;margin:0 0 26px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+  .card h3{margin:0 0 6px;font-size:16px}
+  .card h3 .n{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:8px}
+  .card p{margin:0;color:var(--dim);font-size:14.5px}
+  .pain li{margin:8px 0;color:var(--dim)}
+  .pain b{color:var(--ink)}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:34px;text-align:center;max-width:520px;margin:0 auto}
+  .amt{font-size:46px;font-weight:800;letter-spacing:-.02em}
+  .amt s{color:var(--dim);font-weight:500;font-size:24px;margin-right:10px}
+  .inc{text-align:left;max-width:360px;margin:18px auto 24px}
+  .inc li{margin:7px 0;color:var(--dim)}
+  .inc li::marker{color:var(--ok)}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:2px 18px;margin:10px 0}
+  .faq summary{cursor:pointer;padding:14px 0;font-weight:600;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq p{color:var(--dim);margin:0 0 14px}
+  footer{padding:40px 0 60px;color:var(--dim);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  .choose{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  @media(max-width:720px){.choose{grid-template-columns:1fr}}
+  .choose a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;color:var(--ink);font-weight:600}
+  .choose a:hover,.choose a:focus{border-color:var(--accent)}
+  .choose a span{display:block;color:var(--dim);font-weight:400;font-size:14px;margin-top:4px}
+  .role ol{color:var(--dim);padding-left:22px;margin:14px 0}
+  .role ol li{margin:8px 0}
+  .role ol b{color:var(--ink)}
+  .role .fine{color:var(--dim);font-size:14px;margin:6px 0 18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header style="padding:52px 0 28px;text-align:left">
+  <div class="kicker">Incident note</div>
+  <h1>It says it succeeded. It did nothing.</h1>
+  <p class="sub" style="margin-left:0">A scheduled run that fails is visible. A run that never starts can be caught by watching for its absence. This is the third case, and it defeats both checks: a run that started, ended, reported success, and produced no work.</p>
+</header>
+
+<section>
+  <h2>How we found it</h2>
+  <p>A one-time task was built for a single purpose: verify that another task's watch had worked on its first night. It ran. Status: succeeded. Duration: seventeen seconds. It reached no verdict and wrote nothing.</p>
+  <p>Nothing in the monitoring noticed, because there was nothing to notice. The run was not missing. It was not still running. It had not failed.</p>
+</section>
+
+<section>
+  <h2>Cause one: the task file points at itself</h2>
+  <p>The entire body of that task's instruction file was a single line telling the run to open that same instruction file and follow it.</p>
+  <p>The scheduler inlines the file <b>as</b> the prompt. So the run received instructions to read a file whose only instruction was to read that file, found nothing else, and stopped. Correctly, in a sense -- there was nothing to do.</p>
+  <p><b>The rule:</b> a scheduled task's instruction file <i>is</i> the prompt. It must carry the work. A file that names itself, or names another file to go and read, is an empty task that will report success forever.</p>
+</section>
+
+<section>
+  <h2>Cause two: the first step needs approval nobody is there to give</h2>
+  <p>The other way to get a seventeen-second run is a first action that waits. A path outside the working folder, a command whose text changes every run and so can never be pre-approved, an interactive tool. Unattended, that run sits until something times it out.</p>
+  <p>Both causes look identical from outside: a short run, a success status, no output. The difference only shows in the transcript.</p>
+</section>
+
+<section>
+  <h2>The fourth check</h2>
+  <p>If you monitor scheduled work for absence, you probably classify three ways: missing, stuck, failed. Add a fourth.</p>
+  <p><b>EMPTY:</b> the newest run reports success but its elapsed time is implausibly short for that task. Report it exactly like a missing run.</p>
+  <p>Pick the threshold from what a legitimate early stop costs. On our desk, a task that woke on a weekend, called its data command, saw the market was closed and answered in one line took <b>67 seconds</b>. A stall took 17. Thirty seconds separates them cleanly: under that, the run has not called a tool and read a result.</p>
+  <p class="note">Two details that decide whether this works. The new class has to reach the notification, not just the report -- a finding that stays inside a report nobody opens is the same blind spot one step further out. And it has to apply to one-time tasks, which absence monitors usually skip: a recurring task gets another chance in fifteen minutes, but a one-time task's only run is the whole job.</p>
+</section>
+
+<section>
+  <h2>Why a false positive here is cheap</h2>
+  <p>The check occasionally flags a run that legitimately had nothing to do. That costs one line in a report a person reads. The failure it prevents is a day recorded as covered that never happened, discovered a week later. Those are not the same size.</p>
+</section>
+
+<section>
+  <h2>Where this came from</h2>
+  <p>This is one section of <b>self-verifying-loops</b>, one of eight Agent Skills in the Claude Code Power Pack. The skills are plain SKILL.md markdown procedures -- no install, no runtime, no dependency. Drop a folder into <code>~/.claude/skills/</code> and invoke it by name.</p>
+  <p style="margin-top:18px">
+    <a class="cta" href="https://resilience88.gumroad.com/l/ngwuyp">Get 4 skills free</a>
+    <a class="cta secondary" href="/">See the full pack -- $29</a>
+  </p>
+  <p class="note">30-day refund. Single-seat license. Free updates. Sold by ResilientMindset via Gumroad. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+</section>
+
+</div>
+</body>
+</html>

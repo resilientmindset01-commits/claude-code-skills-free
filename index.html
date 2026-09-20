@@ -222,6 +222,21 @@
     </div>
   </section>
 
+  <section>
+    <h2>Field notes</h2>
+    <p style="color:var(--dim);max-width:720px">The reasoning behind the skills, published in full and free to read. Each one is a specific failure, checked against Anthropic's own documentation or observed directly rather than assumed.</p>
+    <ul style="line-height:1.9;padding-left:20px">
+      <li><a href="/skill-stops-working-long-session">Your skill stops working in long sessions</a> &mdash; <span style="color:var(--dim)">Skill bodies are truncated after compaction, and truncation keeps the start of the file.</span></li>
+      <li><a href="/claude-md-rule-stopped-applying">A CLAUDE.md rule that worked and then stopped</a> &mdash; <span style="color:var(--dim)">Path-scoped rules do not survive compaction. The project-root file does.</span></li>
+      <li><a href="/scheduled-task-ran-but-did-nothing">Your scheduled task says it succeeded and did nothing</a> &mdash; <span style="color:var(--dim)">A run that produces no output is not missing, not stuck and not failed. The fourth check.</span></li>
+      <li><a href="/cron-fired-on-the-wrong-day">Your cron job fired on the wrong day</a> &mdash; <span style="color:var(--dim)">Day-of-month and day-of-week are OR-ed, plus dispatch offsets and catch-up runs.</span></li>
+      <li><a href="/agent-stalled-lost-the-work">Your agent stalled and you lost the work</a> &mdash; <span style="color:var(--dim)">You probably did not. Flush per item, then finish from the file.</span></li>
+      <li><a href="/claude-md-ignored">Why Claude ignores your CLAUDE.md</a> &mdash; <span style="color:var(--dim)">Four reasons a rule does not hold, a scope-gap test, and a drift canary.</span></li>
+      <li><a href="/agent-agrees-with-everything">Your agent agrees with everything you say</a> &mdash; <span style="color:var(--dim)">Why a coding agent validates a bad plan, and how to get a real judgment instead.</span></li>
+      <li><a href="/auto-mode-what-changed">Auto mode: what actually changed</a> &mdash; <span style="color:var(--dim)">The permission mode that now starts by default, and which of your allow rules it drops.</span></li>
+    </ul>
+  </section>
+
   <section class="faq">
     <h2>FAQ</h2>
     <details><summary>Do I need to be a developer?</summary><p>No, but you need to already use a coding agent (Claude Code or similar). The skills assume you run one; they make its output reliable. One skill, review-ai-code, is written for people who read code.</p></details>

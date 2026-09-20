@@ -23,6 +23,18 @@
 - Seller: ResilientMindset, via Gumroad. Questions and team licenses: reply to any Gumroad receipt from ResilientMindset -- the free starter kit sends one too.
 - Updates: free. The 2026-09-17 update expanded all eight skills and more than doubled the pack overall.
 
+## Field notes (free, no signup)
+Short write-ups of specific failures, each one checked against Anthropic's own documentation or observed
+directly. They are the reasoning behind the skills, published in full.
+- Your skill stops working in long sessions: Skill bodies are truncated after compaction, and truncation keeps the start of the file. https://tools.prepbrix.com/skill-stops-working-long-session
+- A CLAUDE.md rule that worked and then stopped: Path-scoped rules do not survive compaction. The project-root file does. https://tools.prepbrix.com/claude-md-rule-stopped-applying
+- Your scheduled task says it succeeded and did nothing: A run that produces no output is not missing, not stuck and not failed. The fourth check. https://tools.prepbrix.com/scheduled-task-ran-but-did-nothing
+- Your cron job fired on the wrong day: Day-of-month and day-of-week are OR-ed, plus dispatch offsets and catch-up runs. https://tools.prepbrix.com/cron-fired-on-the-wrong-day
+- Your agent stalled and you lost the work: You probably did not. Flush per item, then finish from the file. https://tools.prepbrix.com/agent-stalled-lost-the-work
+- Why Claude ignores your CLAUDE.md: Four reasons a rule does not hold, a scope-gap test, and a drift canary. https://tools.prepbrix.com/claude-md-ignored
+- Your agent agrees with everything you say: Why a coding agent validates a bad plan, and how to get a real judgment instead. https://tools.prepbrix.com/agent-agrees-with-everything
+- Auto mode: what actually changed: The permission mode that now starts by default, and which of your allow rules it drops. https://tools.prepbrix.com/auto-mode-what-changed
+
 ## Free starter kit
 - Four skills: review-ai-code, claude-md-rules and context-curation (samples from the paid pack) and
   session-handoff-memory (free kit only, not in the paid pack), plus a one-page cheatsheet.
