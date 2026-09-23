@@ -18,6 +18,28 @@ Prefer a zip plus a one-page cheatsheet emailed to you? Get the free starter kit
   a small curated memory file it reads at the start and updates at the end, so it stops
   re-asking what you told it and stops repeating a dead end it already ruled out.
 
+## Field notes -- the reasoning, free to read
+
+Short write-ups of specific failures, each checked against Anthropic's own
+documentation or observed directly rather than assumed. No signup.
+
+- [Your skill stops working in long sessions](https://tools.prepbrix.com/skill-stops-working-long-session)
+  -- after compaction a skill is re-injected capped at 5,000 tokens, and truncation keeps the START of the file.
+- [A CLAUDE.md rule that worked and then stopped](https://tools.prepbrix.com/claude-md-rule-stopped-applying)
+  -- path-scoped rules do not survive compaction. The project-root file does.
+- [Why Claude ignores your CLAUDE.md](https://tools.prepbrix.com/claude-md-ignored)
+  -- four reasons a rule does not hold, a scope-gap test, and a drift canary.
+- [Your agent agrees with everything you say](https://tools.prepbrix.com/agent-agrees-with-everything)
+  -- why a coding agent validates a bad plan, and how to get a real judgment.
+- [Your scheduled task says it succeeded and did nothing](https://tools.prepbrix.com/scheduled-task-ran-but-did-nothing)
+  -- a run that produces no output is not missing, not stuck and not failed.
+- [Your cron job fired on the wrong day](https://tools.prepbrix.com/cron-fired-on-the-wrong-day)
+  -- day-of-month and day-of-week are OR-ed, plus dispatch offsets and catch-up runs.
+- [Your agent stalled and you lost the work](https://tools.prepbrix.com/agent-stalled-lost-the-work)
+  -- you probably did not. Flush per item, then finish from the file.
+- [Auto mode: what actually changed](https://tools.prepbrix.com/auto-mode-what-changed)
+  -- the permission mode that now starts by default, and which allow rules it drops.
+
 ## The full pack (8 skills)
 Three of these four are samples from the pack; session-handoff-memory is free-only.
 The full **Claude Code Power Pack** adds:
