@@ -20,8 +20,6 @@ correct. ([the write-up](https://tools.prepbrix.com/skill-stops-working-long-ses
 Drop a folder into `~/.claude/skills/` (all projects) or `<repo>/.claude/skills/` (one
 project), then invoke it by name or let the agent load it.
 
-Prefer a zip plus a one-page cheatsheet emailed to you? Get the free starter kit:
-[https://resilience88.gumroad.com/l/ngwuyp]
 
 - **review-ai-code** -- review AI-generated code like a senior developer: a 9-step
   ordered review + pre-merge checklist that catches bugs that pass the tests but are
@@ -56,13 +54,13 @@ documentation or observed directly rather than assumed. No signup.
 - [Auto mode: what actually changed](https://tools.prepbrix.com/auto-mode-what-changed)
   -- the permission mode that now starts by default, and which allow rules it drops.
 
-## The full pack (8 skills)
-Three of these four are samples from the pack; session-handoff-memory is free-only.
-The full **Claude Code Power Pack** adds:
-adversarial-self-critique, self-verifying-loops, multi-agent-finisher,
-agent-bash-security, and skill-authoring -- the guardrails that make an agent's
-output safe to ship.
+## Related
 
-Get it: [https://resilience88.gumroad.com/l/hvdgsc]
+These four are complete and free to use. Three of them also appear in a larger paid set
+of eight, which adds adversarial-self-critique, self-verifying-loops,
+multi-agent-finisher, agent-bash-security and skill-authoring. It is mentioned here for
+disclosure rather than as an ask -- nothing in this repository depends on it, and the
+four skills above are not samples that stop working.
+[Details](https://tools.prepbrix.com).
 
 *Not affiliated with Anthropic. "Claude" is a trademark of Anthropic.*
