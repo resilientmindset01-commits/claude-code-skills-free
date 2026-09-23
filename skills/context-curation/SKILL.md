@@ -28,6 +28,28 @@ article's cited percentage gains and the "Agentic Context Engineering" paper it
 leans on are UNVERIFIED here -- the instrumentation habit stands on its own without
 them, so no borrowed number is asserted as fact.
 
+## THE CARD -- everything this skill guarantees, in the part that survives truncation
+After a long conversation compacts, Claude Code re-injects an invoked skill capped at 5,000 tokens and keeps
+the START of the file. This skill is longer than that, so the sections below the cut are elaboration you may
+not have. Everything load-bearing is restated here.
+
+THE STARTUP BUDGET, with real numbers: before you type anything a session carries roughly 7,850 tokens -- system
+prompt 4,200, project CLAUDE.md 1,800, auto memory 680, skill descriptions 450, user CLAUDE.md 320, environment 280,
+MCP tool names 120. A user prompt against that is about 45. YOUR WORDS ARE UNDER ONE PERCENT, so curation pays in
+the instruction files, not in how you phrase the request.
+PUT THE BUDGET IN CODE, NOT IN INTENTION. Curation you have to remember stops working on the day you are busy, which
+is the day it matters. Cap what retrieval returns, cap what a tool returns, cap the request, cap the output, attach
+only the tools the task needs, and gate before the call -- the cheapest model call is the one that does not happen.
+WHAT SURVIVES COMPACTION: the project-root CLAUDE.md, unscoped rules, auto memory and the plan are re-read from
+disk. Rules with `paths:` frontmatter and nested CLAUDE.md files are NOT -- they were message history and get
+summarised away. Up to five recently modified files are re-read. Invoked skills come back capped at 5,000 tokens
+each and 25,000 total, oldest dropped first.
+AUTO MEMORY IS READ TO THE FIRST 200 LINES OR 25KB, whichever comes first, and the rest is dropped at load rather
+than partially read.
+THE REVERSAL THAT MAKES THIS PERMANENT: a bigger context window DELAYS the problem, it does not solve it. Keep key
+decisions, current state and accepted results in a durable record you write on purpose, not in the conversation you
+hope survives.
+
 ## Why agents cliff -- the four-link loop
 Long-horizon agents do not degrade gracefully; they hold, then suddenly fall off.
 Four links make the loop, and seeing all four is what stops you reaching for the

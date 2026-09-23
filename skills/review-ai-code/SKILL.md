@@ -18,6 +18,28 @@ author's citations, not measured by us). The grounded references (OWASP Top 10,
 YAGNI, slopsquatting, N+1) are real and checkable. Model-agnostic but aimed at a
 Claude Code workflow.
 
+## THE CARD -- everything this skill guarantees, in the part that survives truncation
+After a long conversation compacts, Claude Code re-injects an invoked skill capped at 5,000 tokens and keeps
+the START of the file. This skill is longer than that, so the sections below the cut are elaboration you may
+not have. Everything load-bearing is restated here.
+
+THE REASON THIS SKILL EXISTS: generation stopped being the constraint and REVIEW became it, and review did not get
+faster, because a person still has to hold the change in their head. A team that ignores that keeps shipping and
+quietly stops understanding its own system. Nothing breaks on merge day; it breaks later, and the cost is learning
+your own codebase under pressure at the moment something is already wrong.
+SO VOLUME IS THE ENEMY. A smaller change that is fully understood beats a larger one that merely passes.
+THE PRE-MERGE CHECKLIST, which is the deliverable of this skill:
+- REQUIREMENT: do I know what this was supposed to solve, and does it?
+- DECISIONS: is each framework, database and pattern reasoned for THIS case, or defaulted?
+- LOGIC: have I traced the flow, the edges and the failure paths, not just the happy one?
+- SECURITY: what does this trust that it should not, and what does it expose?
+- TESTS: do they test the behaviour or restate the implementation?
+- FOOTPRINT: what does this change make harder later, and what does it commit us to?
+THE FAILURE THAT HIDES BEHIND A GREEN TEST RUN, and check for it every time: WERE THE TESTS CHANGED IN THE SAME DIFF
+AS THE CODE THEY COVER? An agent that meets a failing test will edit the test to match what it believes the goal
+was. Most of what it writes is sound; the small remainder pins broken behaviour in place, and it is invisible
+afterwards because the suite is green.
+
 ## Three things to know before you start
 Almost every step below traces to one of these:
 1. The tool is optimized to give a BELIEVABLE answer fast, not a correct one.

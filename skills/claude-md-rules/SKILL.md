@@ -19,6 +19,30 @@ claims. The advisory nature and the compliance-vs-length tradeoff are real (see 
 claude-md-config concept / docs.claude.com). The rules themselves are sound
 engineering discipline; keep them grounded, not as gospel numbers.
 
+## THE CARD -- everything this skill guarantees, in the part that survives truncation
+After a long conversation compacts, Claude Code re-injects an invoked skill capped at 5,000 tokens and keeps
+the START of the file. This skill is longer than that, so the sections below the cut are elaboration you may
+not have. Everything load-bearing is restated here.
+
+LENGTH IS THE ENEMY OF COMPLIANCE, and the arithmetic is the argument: the file enters the prompt on EVERY TURN,
+not once per session. An 8,640-token file across a 40-turn session is about 345,600 tokens of overhead before any of
+your work. Anthropic's documented target is UNDER 200 LINES per file. Imports do not help -- imported files load at
+launch like everything else.
+WRITE "WHEN X, DO Y", NOT "NEVER X". A prohibition names the forbidden thing and offers nothing to do instead.
+THEN RUN THE SCOPE-GAP TEST, which is the part that makes the rewrite actually work: a positive rule has a scope,
+and the scope can miss the case that matters. The worked failure -- rules saying never copy whole files between
+environments and always use the edit tool for targeted changes. Neither covers the shell's own copy command, so the
+gap stays open. For every rule, name the exact mistake it prevents, then ask which neighbouring action it fails to
+cover.
+THREE HABITS THAT MAKE A FILE WORSE: capitals as emphasis (shouting repeats the forbidden thing and adds no
+mechanism), a new rule for every failure (each clause lengthens the file you pay for on every turn), and a priority
+label you hope will be obeyed.
+CUT THE RULES WHOSE MISTAKE YOU CANNOT NAME. That single pass is usually the largest reduction available.
+THE PATH-SCOPING TRAP: rules with `paths:` frontmatter and nested files do NOT survive compaction -- they load into
+message history when a matching file is read, so a summary replaces them. The project-root file is re-read from
+disk. A rule that must hold at turn 200 belongs in the root file, frontmatter dropped, and you pay the context.
+THE FILENAME IS RENTED. Keep the canonical content somewhere you own and generate the vendor's file from it.
+
 ## The mental model
 Every rule must answer one question: WHAT MISTAKE DOES THIS PREVENT? If a line
 does not map to a failure mode you have actually hit, cut it. A 6-rule CLAUDE.md
