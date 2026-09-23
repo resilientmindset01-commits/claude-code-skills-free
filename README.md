@@ -1,8 +1,24 @@
-# Claude Code skills -- free sample (4 of 9)
+# Claude Code skills -- four, free, and checked against Anthropic's docs
 
-Four Agent Skills I use with Claude Code every day, free. Drop a folder into
-`~/.claude/skills/` (all projects) or `<repo>/.claude/skills/` (one project), then
-invoke by name or let the agent auto-load it.
+There are repositories offering three hundred skills. This is four, and the
+difference is what happened to them before they were published.
+
+**Every rule here names the failure it prevents.** Not what the skill does -- what goes
+wrong without it. If a rule cannot name its failure, it was cut rather than kept.
+
+**Every claim about Claude Code was verified at Anthropic's own documentation, with the
+date it was read.** Where a claim could not be verified, the skill says so in the text
+instead of stating it anyway. Several widely repeated figures did not survive that check
+and are not in here.
+
+**They survive truncation.** After a long conversation compacts, Claude Code re-injects an
+invoked skill capped at 5,000 tokens and keeps the *start* of the file -- so a long skill
+silently loses its tail in exactly the session it was written for. Each skill here longer
+than that opens with a card restating everything load-bearing, so a truncated copy is still
+correct. ([the write-up](https://tools.prepbrix.com/skill-stops-working-long-session))
+
+Drop a folder into `~/.claude/skills/` (all projects) or `<repo>/.claude/skills/` (one
+project), then invoke it by name or let the agent load it.
 
 Prefer a zip plus a one-page cheatsheet emailed to you? Get the free starter kit:
 [https://resilience88.gumroad.com/l/ngwuyp]
