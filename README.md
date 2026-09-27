@@ -61,6 +61,5 @@ of eight, which adds adversarial-self-critique, self-verifying-loops,
 multi-agent-finisher, agent-bash-security and skill-authoring. It is mentioned here for
 disclosure rather than as an ask -- nothing in this repository depends on it, and the
 four skills above are not samples that stop working.
-[Details](https://tools.prepbrix.com).
 
 *Not affiliated with Anthropic. "Claude" is a trademark of Anthropic.*
