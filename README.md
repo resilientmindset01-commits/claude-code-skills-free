@@ -19,6 +19,8 @@ correct. ([the write-up](https://tools.prepbrix.com/skill-stops-working-long-ses
 
 Drop a folder into `~/.claude/skills/` (all projects) or `<repo>/.claude/skills/` (one
 project), then invoke it by name or let the agent load it.
+Each folder has the skill (`SKILL.md`) and `EXAMPLES.md`: worked before-and-after cases on
+made-up code, so you can see the procedure applied before you use it.
 
 
 - **review-ai-code** -- review AI-generated code like a senior developer: a 9-step
