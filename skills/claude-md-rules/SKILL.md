@@ -235,7 +235,7 @@ weakness is this here for, and is that weakness still real?
 
 The form above is a warning: notice when scaffolding has outlived its reason. The
 creator of Claude Code states it as a DECISION you take before building, which is
-more useful (Boris Cherny, 2026-06). The Claude Code team keeps a framed copy of
+more useful (Boris Cherny, 2026-02-17). The Claude Code team keeps a framed copy of
 Rich Sutton's Bitter Lesson on the wall, and the operating summary he gives is
 NEVER BET AGAINST THE MODEL. The full version, including the per-release recheck
 loop, is the agent-engineering bitter-lesson-scaffolding pattern; what follows is
@@ -325,7 +325,7 @@ find out which rules are still earning anything.
 ## What the file's own author keeps in his (first-party)
 
 Worth having concretely, because it is far smaller than most people's and the split
-explains why (Boris Cherny, 2026-06).
+explains why (Boris Cherny, 2026-02-17).
 
 HIS PERSONAL FILE IS TWO LINES. Both are workflow preferences that are true of HIM
 rather than of the project: enable auto-merge on a PR he opens, and post it to the
@@ -533,6 +533,47 @@ built the structure and verified the file mechanics himself. Both the import and
 symlink patterns are documented by Anthropic. VERIFY the current import depth and
 filename support against live docs before relying on specifics -- vendor conventions
 are exactly the thing this section assumes will move.
+
+## AGENTS.md is read natively now -- with conditions (verified 2026-09-24)
+
+Raised by a short X post from @steipete (2026-09-23) pointing at blog.szypowi.cz, "Claude Code reads AGENTS.md only
+when telemetry is on" (2026-09-23; its author labels it AI-assisted). Written from Anthropic's docs, which confirm
+the core of it.
+
+WHAT THE DOCS SAY (code.claude.com/docs/en/memory, read 2026-09-24):
+- "Reading `AGENTS.md` directly requires Claude Code v2.1.277 or later."
+- "By default, Claude reads `AGENTS.md` only when you have no `CLAUDE.md` in your working directory or above it."
+  A `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` there counts; `~/.claude/CLAUDE.md`, a managed
+  `CLAUDE.md` and `.claude/rules/` do not. The **Project instructions** value `claude-md-and-agents-md` loads both.
+  It is set in `/config`, or under the built-in `agents-md` plugin in `pluginConfigs` in user, `--settings` or
+  managed settings -- "Claude Code ignores it in project and local settings files."
+- The gap the blog found: "Before v2.1.281, some sessions, such as those on Amazon Bedrock or with telemetry
+  disabled, read `CLAUDE.md` files only. On those versions, update Claude Code." The stated workaround is to import
+  `AGENTS.md` from a `CLAUDE.md`.
+- code.claude.com/docs/en/env-vars, same day: for `DISABLE_TELEMETRY` and `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`,
+  "any non-empty value including `0` turns the behavior on, and you turn the behavior off by unsetting the variable
+  or setting it to an empty value." Setting one to 0 does not switch it off.
+
+WHAT THIS CHANGES IN THE ADAPTER RULE ABOVE. Nothing in the rule, one thing in its reasoning. On a current version in
+an ordinary session, the `@AGENTS.md` import in a thin `CLAUDE.md` is no longer required. It is still the one form
+that works on every version and in every session type, and the docs say keeping it "never makes Claude read
+`AGENTS.md` twice". So keep the import. The native read is a convenience with a version floor and, on older
+versions, a silent dependency on settings that look unrelated to it.
+
+THE LESSON THAT OUTLIVES THE BUG. A privacy setting silently switched off a feature that reads a local file, and
+nothing printed a warning; the author found it only with a canary word. That is the tripwire drill below in
+miniature: plant a word that only the instruction file contains and ask for it with `claude -p`. Run it after any
+upgrade, after any change to telemetry or traffic settings, and on any provider other than the first-party API. A
+missing rule in the answer is the only signal you get.
+
+NOT VERIFIED, NOT CARRIED: the blog's internal flag name, its claim that a project-settings `env` block cannot clear
+the variables, and its claim that `.agents/skills` is not read natively. None of them appears on the Anthropic
+pages read for this section.
+
+ESTATE NOTE, 2026-09-24: this machine runs Claude Code 2.1.278, inside the affected range, with neither variable set
+in the session or user environment. ConceptForge and ContentRepurposing each hold BOTH an AGENTS.md and a CLAUDE.md,
+so under the default rule Claude Code reads only their CLAUDE.md on any version. If their AGENTS.md is meant for
+Claude as well, it needs an `@AGENTS.md` import. Not changed here: which file is canonical is the operator's call.
 
 ## Two numbers from the source, and the path-scoping trap
 Verified at code.claude.com 2026-09-19, on the memory and context-window pages.

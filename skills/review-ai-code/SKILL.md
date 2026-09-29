@@ -339,6 +339,19 @@ finds what is wrong with the diff, these find what is wrong with keeping it.
   an attacker can register and wait at, which is a documented supply-chain route)?
 - Performance: N+1, missing indexes, too many calls, over-fetching?
 - Complexity: is every layer earning its place?
+
+Web-app security sweep for a whole vibe-coded app, not one diff. These are well-known web-security failures, grouped in
+the order @DamiDefi lists them (2026-09-24). Point the agent at the whole repo and have it report file:line evidence
+for each item:
+- Secrets: .env committed to git; real API keys in frontend code; CORS `*` on authenticated endpoints.
+- Access control: row-level security off (Supabase / Postgres); permission checks only in the frontend; an admin route
+  with no auth; predictable IDs with no ownership check.
+- Input: SQL built by concatenation; no server-side validation; user content rendered as raw HTML; file uploads
+  with no type or size check.
+- Auth: plaintext passwords; auth tokens in localStorage; no email verification; no password-strength or breach check.
+- Abuse: no rate limit on login or other expensive endpoints; update endpoints that save the whole request body (mass
+  assignment of `role` and similar fields); incoming webhooks with no signature check.
+- Hygiene: stack traces shown in production; dependencies never updated.
 - Error handling: failure paths, fallbacks, retries?
 - Maintainability: will this make sense to someone else in six months?
 - My own inputs: did I keep secrets out of the prompt?
